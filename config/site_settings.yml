@@ -54,7 +54,7 @@ basic:
     client: true
     refresh: true
     list: true
-    default: 'latest|new|unread|starred|top|categories'
+    default: 'latest|new|unread|starred|top|categories|people'
   post_menu:
     client: true
     list: true

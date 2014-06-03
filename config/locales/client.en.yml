@@ -1287,6 +1287,8 @@ en:
         this_week: "This week"
         today: "Today"
         other_periods: "see more top topics"
+      people:
+        title: "People"
 
     browser_update: 'Unfortunately, <a href="http://www.discourse.org/faq/#browser">your browser is too old to work on this Discourse forum</a>. Please <a href="http://browsehappy.com">upgrade your browser</a>.'
 

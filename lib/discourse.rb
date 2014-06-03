@@ -62,11 +62,11 @@ module Discourse
   end
 
   def self.top_menu_items
-    @top_menu_items ||= Discourse.filters + [:category, :categories, :top]
+    @top_menu_items ||= Discourse.filters + [:category, :categories, :top, :people]
   end
 
   def self.anonymous_top_menu_items
-    @anonymous_top_menu_items ||= Discourse.anonymous_filters + [:category, :categories, :top]
+    @anonymous_top_menu_items ||= Discourse.anonymous_filters + [:category, :categories, :top, :people]
   end
 
   def self.activate_plugins!
