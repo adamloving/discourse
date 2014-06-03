@@ -550,5 +550,23 @@ Discourse.User.reopenClass(Discourse.Singleton, {
       },
       type: 'POST'
     });
+  },
+
+  /**
+    findAll Users for the /people page
+
+  **/
+  findAll: function(query, filter) {
+    query = query || 'active';
+    
+    // TODO: Don't use /admin endpoint
+    return Discourse.ajax("/admin/users/list/" + query + ".json", {
+      data: { filter: filter }
+    }).then(function(users) {
+      return users.map(function(u) {
+        return Discourse.User.create(u);
+      });
+    });
   }
+
 });
