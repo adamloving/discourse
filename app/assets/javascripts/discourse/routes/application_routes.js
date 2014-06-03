@@ -60,8 +60,12 @@ Discourse.Route.buildRoutes(function() {
     this.route('members');
   });
 
+  this.resource('people', { path: '/people' }, function () {});
+
   // User routes
   this.resource('user', { path: '/users/:username' }, function() {
+    
+    // /users/:username/activity
     this.resource('userActivity', { path: '/activity' }, function() {
       router = this;
       _.map(Discourse.UserAction.TYPES, function (id, userAction) {
