@@ -37,7 +37,7 @@ class ColorScheme < ActiveRecord::Base
       current_version.find_by(enabled: true)
     rescue => e
       # When installing on Heroku, asset precompilation calls this before table exists
-      Rails.logger.error "ColorScheme Error", e
+      Rails.logger.error "ColorScheme Error #{e}"
       false
     end
   end
