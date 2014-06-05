@@ -17,7 +17,7 @@
         {{/if}}
       </a>
     {{/if}}
-    <div class='topic-avatar span2'>
+    <div class='topic-avatar'>
       {{#unless userDeleted}}
         <div {{bind-attr class=":contents byTopicCreator:topic-creator :trigger-expansion"}}>
           <a class="main-avatar" href='{{unbound usernameUrl}}' {{action showPosterExpansion this}}>{{avatar this imageSize="large"}}</a>
@@ -36,7 +36,7 @@
       {{/if}}
     </div>
 
-    <div class='topic-body span14'>
+    <div class='topic-body'>
       <div class='topic-meta-data'>
         {{poster-name post=this expandAction="showPosterExpansion"}}
         <div class='post-info'>

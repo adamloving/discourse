@@ -235,8 +235,23 @@ class ImportScripts::Base
     PostCreator.create(user, opts)
   end
 
+  def close_inactive_topics(opts={})
+    num_days = opts[:days] || 30
+    puts '', "Closing topics that have been inactive for more than #{num_days} days."
+
+    query = Topic.where('last_posted_at < ?', num_days.days.ago).where(closed: false)
+    total_count = query.count
+    closed_count = 0
+
+    query.find_each do |topic|
+      topic.update_status('closed', true, Discourse.system_user)
+      closed_count += 1
+      print_status(closed_count, total_count)
+    end
+  end
+
   def update_bumped_at
-    Post.exec_sql("update topics t set bumped_at = (select max(created_at) from posts where topic_id = t.id)")
+    Post.exec_sql("update topics t set bumped_at = (select max(created_at) from posts where topic_id = t.id and post_type != #{Post.types[:moderator_action]})")
   end
 
   def print_status(current, max)

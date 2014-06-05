@@ -61,7 +61,8 @@ export default Discourse.Controller.extend({
   },
 
   updateDraftStatus: function() {
-    this.get('model').updateDraftStatus();
+    var c = this.get('model');
+    if (c) { c.updateDraftStatus(); }
   },
 
   appendText: function(text) {
@@ -100,9 +101,9 @@ export default Discourse.Controller.extend({
     if(composer.get('cantSubmitPost')) {
       var now = Date.now();
       this.setProperties({
-        "view.showTitleTip": now,
-        "view.showCategoryTip": now,
-        "view.showReplyTip": now
+        'view.showTitleTip': now,
+        'view.showCategoryTip': now,
+        'view.showReplyTip': now
       });
       return;
     }
@@ -267,19 +268,26 @@ export default Discourse.Controller.extend({
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
       if (composerModel && composerModel.get('replyDirty')) {
+
+        // If we're already open, we don't have to do anything
+        if (composerModel.get('composeState') === Discourse.Composer.OPEN &&
+            composerModel.get('draftKey') === opts.draftKey) {
+          return resolve();
+        }
+
+        // If it's the same draft, just open it up again.
         if (composerModel.get('composeState') === Discourse.Composer.DRAFT &&
             composerModel.get('draftKey') === opts.draftKey &&
             composerModel.action === opts.action) {
 
-            // If it's the same draft, just open it up again.
             composerModel.set('composeState', Discourse.Composer.OPEN);
             return resolve();
-        } else {
-          // If it's a different draft, cancel it and try opening again.
-          return self.cancelComposer().then(function() {
-            return self.open(opts);
-          }).then(resolve, reject);
         }
+
+        // If it's a different draft, cancel it and try opening again.
+        return self.cancelComposer().then(function() {
+          return self.open(opts);
+        }).then(resolve, reject);
       }
 
       // we need a draft sequence for the composer to work

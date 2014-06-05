@@ -8,12 +8,30 @@
 **/
 Discourse.TopicController = Discourse.ObjectController.extend(Discourse.SelectedPostsCount, {
   multiSelect: false,
-  needs: ['header', 'modal', 'composer', 'quote-button'],
+  needs: ['header', 'modal', 'composer', 'quote-button', 'search'],
   allPostsSelected: false,
   editingTopic: false,
   selectedPosts: null,
   selectedReplies: null,
   queryParams: ['filter', 'username_filters'],
+
+  contextChanged: function(){
+    this.set('controllers.search.searchContext', this.get('model.searchContext'));
+  }.observes('topic'),
+
+  termChanged: function(){
+    var dropdown = this.get('controllers.header.visibleDropdown');
+    var term = this.get('controllers.search.term');
+
+    if(dropdown === 'search-dropdown' && term){
+      this.set('searchHighlight', term);
+    } else {
+      if(this.get('searchHighlight')){
+        this.set('searchHighlight', null);
+      }
+    }
+
+  }.observes('controllers.search.term', 'controllers.header.visibleDropdown'),
 
   filter: function(key, value) {
     if (arguments.length > 1) {
@@ -265,6 +283,12 @@ Discourse.TopicController = Discourse.ObjectController.extend(Discourse.Selected
     return (this.get('progressPosition') < 2);
   }.property('progressPosition'),
 
+  filteredPostCountChanged: function(){
+    if(this.get('postStream.filteredPostsCount') < this.get('progressPosition')){
+      this.set('progressPosition', this.get('postStream.filteredPostsCount'));
+    }
+  }.observes('postStream.filteredPostsCount'),
+
   jumpBottomDisabled: function() {
     return this.get('progressPosition') >= this.get('postStream.filteredPostsCount') ||
            this.get('progressPosition') >= this.get('highest_post_number');
@@ -407,6 +431,16 @@ Discourse.TopicController = Discourse.ObjectController.extend(Discourse.Selected
         // TODO we could update less data for "acted"
         // (only post actions)
         postStream.triggerChangedPost(data.id, data.updated_at);
+        return;
+      }
+
+      if (data.type === "deleted"){
+        postStream.triggerDeletedPost(data.id, data.post_number);
+        return;
+      }
+
+      if (data.type === "recovered"){
+        postStream.triggerRecoveredPost(data.id, data.post_number);
         return;
       }
 
@@ -622,7 +656,4 @@ Discourse.TopicController = Discourse.ObjectController.extend(Discourse.Selected
     }
   }
 
-
 });
-
-

@@ -74,10 +74,12 @@ Discourse.Composer = Discourse.Model.extend({
         username: this.get('post.username')
       });
 
-      var replyUsername = post.get('reply_to_user.username');
-      var replyAvatarTemplate = post.get('reply_to_user.avatar_template');
-      if (replyUsername && replyAvatarTemplate && this.get('action') === EDIT) {
-        postDescription += " " + I18n.t("post.in_reply_to") + " " + Discourse.Utilities.tinyAvatar(replyAvatarTemplate) + " " + replyUsername;
+      if (!Discourse.Mobile.mobileView) {
+        var replyUsername = post.get('reply_to_user.username');
+        var replyAvatarTemplate = post.get('reply_to_user.avatar_template');
+        if (replyUsername && replyAvatarTemplate && this.get('action') === EDIT) {
+          postDescription += " " + I18n.t("post.in_reply_to") + " " + Discourse.Utilities.tinyAvatar(replyAvatarTemplate) + " " + replyUsername;
+        }
       }
     }
 
@@ -292,7 +294,7 @@ Discourse.Composer = Discourse.Model.extend({
      opts:
        action   - The action we're performing: edit, reply or createTopic
        post     - The post we're replying to, if present
-       topic   - The topic we're replying to, if present
+       topic    - The topic we're replying to, if present
        quote    - If we're opening a reply from a quote, the quote we're making
   */
   open: function(opts) {
