@@ -104,3 +104,5 @@ bundler_stubs/*
 vendor/bundle/*
 
 data/categories.json
+
+data/categories-old.json

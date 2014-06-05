@@ -17,19 +17,37 @@ for category in category_data
 
   for topic in category[:topics]
 
-    puts "topic: #{topic}"
-
-    unless Topic.find_by(title: topic).nil?
-      puts "Topic '#{topic}' exists"
-      next
+    if category[:name] == 'Is it gluten free?'
+      topic[:text] = "Is #{topic[:text].downcase} gluten free?"
     end
 
-    PostCreator.create(
-      user, 
-      raw: 'autocreated', 
-      title: topic, 
-      skip_validations: true, 
-      category: c.id
-    )
+    t = Topic.find_by(title: topic[:text]) 
+    if t.nil?
+      puts "New topic: #{topic[:text]}"
+      p = PostCreator.create(
+        user, 
+        raw: 'autocreated', 
+        title: topic[:text], 
+        skip_validations: true, 
+        category: c.id
+      )
+    else
+      puts "Topic '#{topic[:text]}' exists"
+      p = t.posts.first
+    end
+
+    p.raw = "Here's what we've got so far, please reply with yours.\n\n"
+
+    if topic[:description]
+      p.raw << "> #{topic[:description]}\n\n"
+      p.raw << "Source: "
+    end  
+
+    p.raw << "[#{topic[:text]}](http://www.glutenfreefancy.com/#{topic[:href]})"    
+    p.save 
+
+    TopicLink.extract_from(p) # enable link in post
+
+    puts "Saved #{p.raw}"
   end
 end
