@@ -87,6 +87,10 @@ If you haven't already, download Discourse and create a new branch for your Hero
         git push heroku heroku:master
         ```
 
+8. Tell rails to serve your compiled assets
+
+        heroku config:set DISCOURSE_SERVE_STATIC_ASSETS=true
+
 8. Push your heroku branch to Heroku.
 
         git push heroku heroku:master
