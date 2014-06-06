@@ -23,10 +23,16 @@ If you haven't already, download Discourse and create a new branch for your Hero
 
         heroku addons:add openredis:micro
 
-3. Point the app at your redis provider's URL
+3. Configure your app to connect to redis
 
         heroku config:get OPENREDIS_URL
         heroku config:set REDIS_PROVIDER_URL=<result of above command>
+
+        heroku config:set DISCOURSE_REDIS_HOST=<host from above command>
+        heroku config:set DISCOURSE_REDIS_PORT=<port from above command>
+        heroku config:set DISCOURSE_REDIS_PASSWORD=<password from your provider>
+        heroku config:set DISCOURSE_REDIS_DB=<dbname from your provider>
+
 
 4. Run bundler
 
@@ -44,15 +50,9 @@ If you haven't already, download Discourse and create a new branch for your Hero
 
     There are two options for precompilation. Either precompile locally, **before each deploy** or enable [Heroku's experimental user-env-compile](https://devcenter.heroku.com/articles/labs-user-env-compile) feature and Heroku will precompile your assets for you.
 
-    1. **Option 1:** Enable user-env-compile.
+    1. **Option 1:** Let Heroku compile your assets
 
-            heroku labs:enable user-env-compile
-
-        **Caveat:** If you should need to change or add environment variables for any reason, you will need to remove `user-env-compile`, then re-apply it after making the changes. This will then require you to make a commit, even if it is an empty commit, and then push to Heroku for the changes to be applied.
-
-        If needed, you can remove the user-env-compile option with this command.
-
-            heroku labs:disable user-env-compile
+        This is the default for new apps, and seems to work fine.
 
     2. **Option 2:** Precompile locally.
 
