@@ -30,12 +30,22 @@ class ImportScripts::Base
 
   def perform
     Rails.logger.level = 3 # :error, so that we don't create log files that are many GB
+
     SiteSetting.email_domains_blacklist = ''
+    SiteSetting.min_topic_title_length = 1
+    SiteSetting.min_post_length = 1
+    SiteSetting.min_private_message_post_length = 1
+    SiteSetting.min_private_message_title_length = 1
+    SiteSetting.allow_duplicate_topic_titles = true
+
     RateLimiter.disable
 
     execute
 
     update_bumped_at
+    update_feature_topic_users
+
+    puts '', 'Done'
 
   ensure
     RateLimiter.enable
@@ -60,7 +70,11 @@ class ImportScripts::Base
 
   # Get the Discourse User id based on the id of the source user
   def user_id_from_imported_user_id(import_id)
-    @existing_users[import_id] || @existing_users[import_id.to_s]
+    @existing_users[import_id] || @existing_users[import_id.to_s] || find_user_by_import_id(import_id)
+  end
+
+  def find_user_by_import_id(import_id)
+    UserCustomField.where(name: 'import_id', value: import_id.to_s).first.try(:user)
   end
 
   # Get the Discourse Category id based on the id of the source category
@@ -88,6 +102,7 @@ class ImportScripts::Base
   # create the Discourse user record.
   def create_users(results)
     puts "creating users"
+    num_users_before = User.count
     users_created = 0
     users_skipped = 0
     progress = 0
@@ -116,7 +131,7 @@ class ImportScripts::Base
     end
 
     puts ''
-    puts "created: #{users_created} users"
+    puts "created: #{User.count - num_users_before} users"
     puts " failed: #{@failed_users.size}" if @failed_users.size > 0
   end
 
@@ -125,7 +140,7 @@ class ImportScripts::Base
     existing = User.where(email: opts[:email].downcase, username: opts[:username]).first
     return existing if existing and existing.custom_fields["import_id"].to_i == import_id.to_i
 
-    opts[:name] = User.suggest_name(opts[:name] || opts[:email])
+    opts[:name] = User.suggest_name(opts[:name]) if opts[:name]
     opts[:username] = UserNameSuggester.suggest((opts[:username].present? ? opts[:username] : nil) || opts[:name] || opts[:email])
     opts[:email] = opts[:email].downcase
     opts[:trust_level] = TrustLevel.levels[:basic] unless opts[:trust_level]
@@ -147,10 +162,6 @@ class ImportScripts::Base
     end
 
     u # If there was an error creating the user, u.errors has the messages
-  end
-
-  def find_user_by_import_id(import_id)
-    UserCustomField.where(name: 'import_id', value: import_id.to_s).first.try(:user)
   end
 
   # Iterates through a collection to create categories.
@@ -219,6 +230,9 @@ class ImportScripts::Base
           skipped += 1
           puts "Error creating post #{import_id}. Skipping."
           puts e.message
+        rescue Discourse::InvalidAccess => e
+          skipped += 1
+          puts "InvalidAccess creating post #{import_id}. Topic is closed? #{e.message}"
         end
       end
 
@@ -252,6 +266,19 @@ class ImportScripts::Base
 
   def update_bumped_at
     Post.exec_sql("update topics t set bumped_at = (select max(created_at) from posts where topic_id = t.id and post_type != #{Post.types[:moderator_action]})")
+  end
+
+  def update_feature_topic_users
+    puts '', "updating featured topic users"
+
+    total_count = Topic.count
+    progress_count = 0
+
+    Topic.find_each do |topic|
+      topic.feature_topic_users
+      progress_count += 1
+      print_status(progress_count, total_count)
+    end
   end
 
   def print_status(current, max)

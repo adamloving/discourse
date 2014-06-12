@@ -114,6 +114,16 @@ nav.post-controls {
     transition: all linear 0.15s;
   }
 
+  .actions {
+    text-align: right;
+    float: right;
+    display: inline-block;
+    .more-actions {
+      display: none;
+      overflow: hidden;
+    }
+  }
+
   .show-replies {
     background: scale-color-diff();
     padding: 8px 15px;
@@ -174,9 +184,6 @@ nav.post-controls {
         }
         &.admin {
           position: relative;
-        }
-        &.like, &.edit, &.flag, &.delete, &.share, &.bookmark, &.create, &.admin {
-          float: right;
         }
 
         &.delete:hover {
@@ -329,7 +336,7 @@ a.star {
 
 .topic-map {
   margin: 20px 0 0 0;
-  border: 1px solid scale-color-diff();
+  background: scale-color(scale-color-diff(), $lightness: 40%);
 
   .buttons .btn {
     &:hover {border: 1px solid $primary !important;}
@@ -418,7 +425,7 @@ a.star {
     color: $primary;
   }
   .information {
-    border-top: 1px solid scale-color-diff();
+    border-top: 2px solid scale-color-diff();
   }
 
 .participants { // PMs //
@@ -635,15 +642,20 @@ iframe {
   width: 365px;
   margin-left: -4px;
 
-    h3 {
-      margin: 5px 0;
-    }
+  h3 {
+    margin: 5px 0;
+    float: left;
+  }
 
-    input[type=text] {
-      font-size: 16px;
-      width: 92%;
-      margin-bottom: 10px;
-    }
+  .date {
+    float: right;
+    margin: 5px;
+  }
+
+  input[type=text] {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
 }
 
 .post-select {

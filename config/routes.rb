@@ -62,6 +62,7 @@ Discourse::Application.routes.draw do
       put "grant_moderation", constraints: AdminConstraint.new
       put "approve"
       post "refresh_browsers", constraints: AdminConstraint.new
+      post "log_out", constraints: AdminConstraint.new
       put "activate"
       put "deactivate"
       put "block"
@@ -132,8 +133,8 @@ Discourse::Application.routes.draw do
         get "cancel" => "backups#cancel"
         get "rollback" => "backups#rollback"
         put "readonly" => "backups#readonly"
-        get "upload" => "backups#check_chunk"
-        post "upload" => "backups#upload_chunk"
+        get "upload" => "backups#check_backup_chunk"
+        post "upload" => "backups#upload_backup_chunk"
       end
     end
 
@@ -360,7 +361,12 @@ Discourse::Application.routes.draw do
   get "/posts/:id/expand-embed" => "posts#expand_embed"
   get "raw/:topic_id(/:post_number)" => "posts#markdown"
 
-  resources :invites
+  resources :invites do
+    collection do
+      get "upload" => "invites#check_csv_chunk"
+      post "upload" => "invites#upload_csv_chunk"
+    end
+  end
   delete "invites" => "invites#destroy"
 
   get "onebox" => "onebox#show"
