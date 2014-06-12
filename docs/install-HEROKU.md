@@ -134,6 +134,14 @@ If you haven't already, download Discourse and create a new branch for your Hero
 
     ##### Your Discourse application should now be functional. However, you will still need to [configure mail](#email) functionality and file storage for uploaded images. For some examples of doing this within Heroku, see [Heroku add-on examples](#heroku-add-on-examples).
 
+6. [Optional] Increase Garbage collection limit
+
+When you start up your app, the admin dashboard  will complain "Your server is using default ruby garbage collection parameters"
+
+```
+    heroku config:add RUBY_GC_MALLOC_LIMIT=90000000
+```
+
 ## Running the application locally
 
 Using Foreman to start the application allows you to mimic the way the application is started on Heroku. It loads environment variables via the .env file and instantiates the application using the Procfile. In the .env sample file, we have set `RAILS_ENV='development'`, this makes the Rails environment variable available globally, and is required when starting this application using Foreman.
@@ -198,6 +206,25 @@ Create a .env file from the sample.
     +     :authentication => :plain
     + }
     ```
+
+## S3 (for file uploads)
+
+You can't upload files to heroku, you need to use a service like S3.
+
+Here are the [instructions for setting up S3](https://meta.discourse.org/t/setting-up-file-and-image-uploads-to-s3/7229/23)
+
+You can run this from ```heroku run console``` to test if everything is configured correctly.
+
+```ruby
+bucket_name = Discourse.store.send :s3_bucket
+bucket = Discourse.store.send :get_or_create_directory, bucket_name
+
+f = File.open('README.md')
+bucket = Discourse.store.send :upload, f, 'test.txt'
+```
+
+@adamloving: I think there is still a file size issue. I was testing with a 2MB file that wasn't big enough to trigger the "file too big" Discourse error message, but didn't make it to S3 either.
+
 
 ## Load Testing
 
