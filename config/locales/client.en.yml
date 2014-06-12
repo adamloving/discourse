@@ -249,6 +249,7 @@ en:
       private_messages: "Messages"
       activity_stream: "Activity"
       preferences: "Preferences"
+      bookmarks: "Bookmarks"
       bio: "About me"
       invited_by: "Invited By"
       trust_level: "Trust Level"
@@ -400,7 +401,7 @@ en:
         search: "type to search invites..."
         title: "Invites"
         user: "Invited User"
-        none: "No invites were found."
+        none: "You haven't invited anyone here yet. You can send individual invites, or invite a bunch of people at once by <a href='https://meta.discourse.org/t/send-bulk-invites/16468'>uploading a bulk invite file</a>."
         truncated: "Showing the first {{count}} invites."
         redeemed: "Redeemed Invites"
         redeemed_at: "Redeemed"
@@ -414,6 +415,11 @@ en:
         days_visited: "Days Visited"
         account_age_days: "Account age in days"
         create: "Send an Invite"
+        bulk_invite:
+          text: "Bulk Invite from File"
+          uploading: "UPLOADING"
+          success: "File uploaded successfully, you will be notified shortly with progress."
+          error: "There was an error uploading '{{filename}}': {{message}}"
 
       password:
         title: "Password"
@@ -465,8 +471,8 @@ en:
 
     summary:
       enabled_description: "You're viewing a summary of this topic. To see all posts again, click below."
-      description: "There are <b>{{count}}</b> replies. Save reading time by displaying only the most relevant replies?"
-      description_time: "There are <b>{{count}}</b> replies with an estimated read time of <b>{{readingTime}} minutes</b>. Save reading time by displaying only the most relevant replies?"
+      description: "There are <b>{{count}}</b> replies."
+      description_time: "There are <b>{{count}}</b> replies with an estimated read time of <b>{{readingTime}} minutes</b>."
       enable: 'Summarize This Topic'
       disable: 'Show All Posts'
 
@@ -482,9 +488,7 @@ en:
     trust_level: 'Trust Level'
 
     create_account:
-      title: "Create Account"
-      action: "Create one now!"
-      invite: "Don't have an account yet?"
+      title: "Create New Account"
       failed: "Something went wrong, perhaps this email is already registered, try the forgot password link"
 
     forgot_password:
@@ -617,7 +621,7 @@ en:
       private_message: "<i class='fa fa-envelope-o' title='private message'></i> {{username}} {{link}}"
       invited_to_private_message: "<i class='fa fa-envelope-o' title='private message'></i> {{username}} {{link}}"
       invitee_accepted: "<i title='accepted your invitation' class='fa fa-sign-in'></i> {{username}} accepted your invitation"
-      moved_post: "<i title='moved post' class='fa fa-arrow-right'></i> {{username}} moved {{link}}"
+      moved_post: "<i title='moved post' class='fa fa-sign-out'></i> {{username}} moved {{link}}"
       total_flagged: "total flagged posts"
       linked: "<i title='linked post' class='fa fa-arrow-left'></i> {{username}} {{link}}"
       granted_badge: "<i title='badge granted' class='fa fa-certificate'></i> You were granted {{link}}"
@@ -1704,6 +1708,8 @@ en:
         refresh_browsers: "Force browser refresh"
         show_public_profile: "Show Public Profile"
         impersonate: 'Impersonate'
+        log_out: "Log Out"
+        logged_out: "User was logged out on all devices"
         revoke_admin: 'Revoke Admin'
         grant_admin: 'Grant Admin'
         revoke_moderation: 'Revoke Moderation'

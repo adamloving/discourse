@@ -19,12 +19,14 @@
 //= require ./discourse/controllers/controller
 //= require ./discourse/controllers/object_controller
 //= require ./discourse/controllers/navigation/default
+//= require ./discourse/views/text-field
 //= require ./discourse/views/modal/modal_body_view
 //= require ./discourse/views/modal/flag_view
-//= require ./discourse/views/combobox_view
+//= require ./discourse/views/combo-box
 //= require ./discourse/views/buttons/button_view
 //= require ./discourse/views/buttons/dropdown_button_view
 //= require ./discourse/views/buttons/notifications_button
+//= require ./discourse/views/pagedown-preview
 //= require ./discourse/routes/discourse_route
 //= require ./discourse/routes/discourse_restricted_user_route
 

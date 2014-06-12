@@ -85,6 +85,10 @@ SQL
     { all: all, mine: mine, unread: unread }
   end
 
+  def self.bookmarks_stats(user_id)
+    UserAction.where(action_type: BOOKMARK, user_id: user_id).count
+  end
+
   def self.stream_item(action_id, guardian)
     stream(action_id: action_id, guardian: guardian).first
   end
@@ -106,7 +110,7 @@ SELECT
   a.id,
   t.title, a.action_type, a.created_at, t.id topic_id,
   a.user_id AS target_user_id, au.name AS target_name, au.username AS target_username,
-  coalesce(p.post_number, 1) post_number,
+  coalesce(p.post_number, 1) post_number, p.id as post_id,
   p.reply_to_post_number,
   pu.email, pu.username, pu.name, pu.id user_id,
   pu.uploaded_avatar_id,
@@ -151,15 +155,13 @@ LEFT JOIN categories c on c.id = t.category_id
   def self.log_action!(hash)
     required_parameters = [:action_type, :user_id, :acting_user_id, :target_topic_id, :target_post_id]
     require_parameters(hash, *required_parameters)
+
     transaction(requires_new: true) do
       begin
-
         # TODO there are conditions when this is called and user_id was already rolled back and is invalid.
 
         # protect against dupes, for some reason this is failing in some cases
-        action = self.find_by(hash.select do |k, v|
-  required_parameters.include?(k)
-end)
+        action = self.find_by(hash.select { |k, v| required_parameters.include?(k) })
         return action if action
 
         action = self.new(hash)
@@ -181,10 +183,7 @@ end)
         end
 
         if action.user
-          MessageBus.publish("/users/#{action.user.username.downcase}",
-                                action.id,
-                                user_ids: [user_id],
-                                group_ids: group_ids )
+          MessageBus.publish("/users/#{action.user.username.downcase}", action.id, user_ids: [user_id], group_ids: group_ids)
         end
 
         action

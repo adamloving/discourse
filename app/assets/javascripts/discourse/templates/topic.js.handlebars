@@ -1,5 +1,5 @@
 <div class='container'>
-  {{customHTML "top"}}
+  {{custom-html "top"}}
   {{Discourse.globalNotice}}
 </div>
 
@@ -18,9 +18,9 @@
             {{#if isPrivateMessage}}
               <span class="private-message-glyph"><i class='fa fa-envelope'></i></span>
             {{else}}
-              {{categoryChooser valueAttribute="id" value=newCategoryId source=category_id}}
+              {{category-chooser valueAttribute="id" value=newCategoryId source=category_id}}
             {{/if}}
-            {{textField id='edit-title' value=newTitle}}
+            {{text-field id='edit-title' value=newTitle}}
 
             <button class='btn btn-primary btn-small no-text' {{action finishedEditingTopic}}><i class='fa fa-check'></i></button>
             <button class='btn btn-small no-text' {{action cancelEditingTopic}}><i class='fa fa-times'></i></button>
@@ -28,9 +28,9 @@
             <h1>
               <span class="private-message-glyph"><i class='fa fa-envelope'></i></span>
               {{#if category.parentCategory}}
-                {{boundCategoryLink category.parentCategory}}
+                {{bound-category-link category.parentCategory}}
               {{/if}}
-              {{boundCategoryLink category}}
+              {{bound-category-link category}}
               {{#if details.loaded}}
                 {{topic-status topic=model}}
                 <a href='{{unbound url}}' {{action jumpTop}}>
@@ -57,9 +57,11 @@
   <div class="container posts">
 
     {{view Discourse.SelectedPostsView}}
+
     <div class="row">
       <section class="topic-area" id='topic' data-topic-id='{{unbound id}}'>
         <div class='posts-wrapper'>
+
           <div id='topic-progress-wrapper' {{bind-attr class="dockedCounter:docked"}}>
             <nav id='topic-progress' title="{{i18n topic.progress.title}}" {{bind-attr class="hideProgress:hidden"}}>
               <button id='jump-top' title="{{i18n topic.progress.jump_top}}" {{bind-attr disabled="jumpTopDisabled"}} {{action jumpTop}}><i class="fa fa-arrow-circle-up"></i></button>
@@ -80,11 +82,12 @@
                                  idProperty="post_number"
                                  defaultHeight="200"
                                  content=postStream.posts
-                                 slackRatio=slackRatio
+                                 slackRatio="15"
                                  loadingHTML=controller.loadingHTML
                                  preservesContext="true"
                                  uncloakDefault="true"
-                                 offsetFixed="header"}}
+                                 offsetFixedTop="header"
+                                 offsetFixedBottom="#reply-control"}}
           {{/unless}}
 
           {{#if postStream.loadingBelow}}
@@ -153,5 +156,3 @@
 {{#if currentUser.canManageTopic}}
   {{render "topicAdminMenu" content}}
 {{/if}}
-
-{{customHTML "bottom"}}

@@ -65,19 +65,14 @@ Discourse.Post = Discourse.Model.extend({
   postElementId: Discourse.computed.fmt('post_number', 'post_%@'),
 
   bookmarkedChanged: function() {
-    Discourse.ajax("/posts/" + this.get('id') + "/bookmark", {
-      type: 'PUT',
-      data: {
-        bookmarked: this.get('bookmarked') ? true : false
-      }
-    }).then(null, function (error) {
-      if (error && error.responseText) {
-        bootbox.alert($.parseJSON(error.responseText).errors[0]);
-      } else {
-        bootbox.alert(I18n.t('generic_error'));
-      }
-    });
-
+    Discourse.Post.bookmark(this.get('id'), this.get('bookmarked'))
+             .then(null, function (error) {
+               if (error && error.responseText) {
+                 bootbox.alert($.parseJSON(error.responseText).errors[0]);
+               } else {
+                 bootbox.alert(I18n.t('generic_error'));
+               }
+             });
   }.observes('bookmarked'),
 
   wikiChanged: function() {
@@ -409,11 +404,12 @@ Discourse.Post.reopenClass({
   createActionSummary: function(result) {
     if (result.actions_summary) {
       var lookup = Em.Object.create();
+      // this area should be optimized, it is creating way too many objects per post
       result.actions_summary = result.actions_summary.map(function(a) {
         a.post = result;
         a.actionType = Discourse.Site.current().postActionTypeById(a.id);
         var actionSummary = Discourse.ActionSummary.create(a);
-        lookup.set(a.actionType.get('name_key'), actionSummary);
+        lookup[a.actionType.name_key] = actionSummary;
         return actionSummary;
       });
       result.set('actionByName', lookup);
@@ -456,6 +452,10 @@ Discourse.Post.reopenClass({
     return Discourse.ajax("/posts/" + postId + ".json").then(function (result) {
       return Discourse.Post.create(result);
     });
+  },
+
+  bookmark: function(postId, bookmarked) {
+    return Discourse.ajax("/posts/" + postId + "/bookmark", { type: 'PUT', data: { bookmarked: bookmarked } });
   }
 
 });

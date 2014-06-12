@@ -71,7 +71,8 @@ class UserSerializer < BasicUserSerializer
                      :private_messages_stats,
                      :disable_jump_reply,
                      :gravatar_avatar_upload_id,
-                     :custom_avatar_upload_id
+                     :custom_avatar_upload_id,
+                     :custom_fields
 
   def gravatar_avatar_upload_id
     object.user_avatar.try(:gravatar_upload_id)
@@ -110,10 +111,17 @@ class UserSerializer < BasicUserSerializer
   end
 
   def location
-    object.user_profile.try(:location)
+    object.user_profile.location
   end
   def include_location?
     location.present?
+  end
+
+  def website
+    object.user_profile.website
+  end
+  def include_website?
+    website.present?
   end
 
   def stats
