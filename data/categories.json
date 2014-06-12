@@ -1,0 +1,200 @@
+{
+  "categories": [{
+    "name": "Gluten free foods",
+    "topics": [{
+      "href": "best-gluten-free-alcohol",
+      "text": "Best gluten free alcohol",
+      "description": "Here are some of the best gluten free alcohol. Gluten free beers and potato based distilled alcohol (vodka, rum, and tequila)."
+    }, {
+      "href": "easy-gluten-free-dessert-ideas",
+      "text": "Easy gluten free dessert ideas",
+      "description": null
+    }, {
+      "href": "easy-gluten-free-desserts",
+      "text": "Easy gluten free desserts",
+      "description": null
+    }, {
+      "href": "gluten-free-appetizer-ideas",
+      "text": "Gluten free appetizer ideas",
+      "description": "Gluten free appetizer suggestions: Quick and easy Kalamata olive and Garbanzo Hummus dip. Sweet onion dip served with gluten free rice crackers."
+    }, {
+      "href": "gluten-free-appetizers",
+      "text": "Gluten free appetizers",
+      "description": "Shrimp, fresh vegetables, caviar, artichokes, and avocado can make great gluten free appetizers."
+    }, {
+      "href": "gluten-free-beer",
+      "text": "Gluten free beer",
+      "description": "Beer made from barley and wheat has gluten. Beer made from sorghum syrup, millet, molasses, and brown rice is gluten free."
+    }, {
+      "href": "gluten-free-cake",
+      "text": "Gluten free cake",
+      "description": "You can make gluten free cake by following practically any cake recipeif you use the proper substitute for flour and starches,"
+    }, {
+      "href": "gluten-free-fast-food",
+      "text": "Gluten free fast food",
+      "description": "How to find gluten free fast food when you're out and about. How to avoid restaurants that cross contaminate."
+    }, {
+      "href": "gluten-free-gravy-flour",
+      "text": "Gluten free gravy flour",
+      "description": null
+    }, {
+      "href": "gluten-free-gravy",
+      "text": "Gluten free gravy",
+      "description": null
+    }, {
+      "href": "gluten-free-ice-cream",
+      "text": "Gluten free ice cream",
+      "description": "Ice cream is generally gluten free unless manufacturers use wheat to thicken the ice cream paste. Avoid ice cream cones and flavors like cookies and cream, and brownies."
+    }, {
+      "href": "gluten-free-meatballs",
+      "text": "Gluten free meatballs",
+      "description": "Meat is gluten free, but it is common to mix bread with egg when making meatballs. Check carefully to find out if your meatballs are gluten free"
+    }, {
+      "href": "gluten-free-meatloaf",
+      "text": "Gluten free meatloaf",
+      "description": null
+    }, {
+      "href": "gluten-free-oats",
+      "text": "Gluten free oats",
+      "description": "Only pure oatmeal is gluten free. Gluten free oats must not be cross contaminated."
+    }, {
+      "href": "gluten-free-pastry",
+      "text": "Gluten free pastry",
+      "description": null
+    }, {
+      "href": "gluten-free-pizza-dough",
+      "text": "Gluten free pizza dough",
+      "description": "See gluten free pizza dough products, and the pizza chains that serve gluten free pizza dough"
+    }, {
+      "href": "gluten-free-protein-powder",
+      "text": "Gluten free protein powder",
+      "description": "What to look for, and some examples of good gluten free protein powder."
+    }, {
+      "href": "gluten-free-rice",
+      "text": "Gluten free rice",
+      "description": "Rice is gluten free, and an important food for gluten intolerant people."
+    }, {
+      "href": "gluten-free-scones",
+      "text": "Gluten free scones",
+      "description": "A recipe for making gluten free scones, as well as gluten free scones you can buy packaged or fresh."
+    }, {
+      "href": "gluten-free-soy-sauce",
+      "text": "Gluten free soy sauce",
+      "description": null
+    }, {
+      "href": "gluten-free-tortillas",
+      "text": "Gluten free tortillas",
+      "description": "How to make or buy gluten free tortillas."
+    }, {
+      "href": "gluten-free-vodka-list",
+      "text": "Gluten free vodka list",
+      "description": null
+    }, {
+      "href": "gluten-free-vodka",
+      "text": "Gluten free vodka",
+      "description": null
+    }, {
+      "href": "maltodextrin-gluten",
+      "text": "Maltodextrin gluten",
+      "description": "Maltodextren gluten: read the label to avoid wheat based maltodextrin if you are gluten intolerant."
+    }, {
+      "href": "pure-gluten-free-oats",
+      "text": "Pure gluten free oats",
+      "description": "Pure gluten free oats must be free of cross contamination (and certified gluten free)."
+    }]
+  }, {
+    "name": "Gluten free recipes",
+    "topics": [{
+      "href": "gluten-free-cake-recipe",
+      "text": "Gluten free cake recipe",
+      "description": "A delicious gluten free cake recipe - gluten free chocolate delight."
+    }, {
+      "href": "gluten-free-cheese-cake-recipe",
+      "text": "Gluten free cheese cake recipe",
+      "description": "Delicious gluten free cheesecake recipe"
+    }, {
+      "href": "gluten-free-dairy-free-recipe",
+      "text": "Gluten free dairy free recipe",
+      "description": "Recipes for people who are both gluten free and dairy free (lactose intolerant)."
+    }, {
+      "href": "gluten-free-meatball-recipe",
+      "text": "Gluten free meatball recipe",
+      "description": "Gluten free meatball recipe with ground beef, cheese, and eggs - but no gluten."
+    }, {
+      "href": "gluten-free-meatloaf-recipe",
+      "text": "Gluten free meatloaf recipe",
+      "description": null
+    }, {
+      "href": "gluten-free-pasta-recipe",
+      "text": "Gluten free pasta recipe",
+      "description": "How to make gluten free pasta. A recipe for gluten free pasta"
+    }, {
+      "href": "gluten-free-pastry-recipe",
+      "text": "Gluten free pastry recipe",
+      "description": null
+    }, {
+      "href": "gluten-free-pizza-dough-recipe",
+      "text": "Gluten free pizza dough recipe",
+      "description": "Try this gluten free pizza dough if you miss pizza."
+    }]
+  }, {
+    "name": "Is it gluten free?",
+    "topics": [{
+      "href": "barley",
+      "text": "Barley",
+      "description": null
+    }, {
+      "href": "couscous",
+      "text": "Couscous",
+      "description": null
+    }, {
+      "href": "farro",
+      "text": "Farro",
+      "description": null
+    }, {
+      "href": "gravy",
+      "text": "Gravy",
+      "description": null
+    }, {
+      "href": "ice-cream",
+      "text": "Ice cream",
+      "description": null
+    }, {
+      "href": "maltodextrin",
+      "text": "Maltodextrin",
+      "description": null
+    }, {
+      "href": "meatloaf",
+      "text": "Meatloaf",
+      "description": null
+    }, {
+      "href": "oatmeal",
+      "text": "Oatmeal",
+      "description": null
+    }, {
+      "href": "rice",
+      "text": "Rice",
+      "description": null
+    }, {
+      "href": "rye-bread",
+      "text": "Rye bread",
+      "description": null
+    }, {
+      "href": "soy-sauce",
+      "text": "Soy sauce",
+      "description": null
+    }, {
+      "href": "vodka",
+      "text": "Vodka",
+      "description": null
+    }, {
+      "href": "wheat",
+      "text": "Wheat",
+      "description": null
+    }, {
+      "href": "yogurt",
+      "text": "Yogurt",
+      "description": null
+    }]
+  }]
+}

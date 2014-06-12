@@ -10,6 +10,7 @@ class CurrentUserSerializer < BasicUserSerializer
              :staff?,
              :reply_count,
              :topic_count,
+             :bookmarks_count,
              :enable_quoting,
              :external_links_in_new_tab,
              :dynamic_favicon,
@@ -20,7 +21,8 @@ class CurrentUserSerializer < BasicUserSerializer
              :can_delete_account,
              :should_be_redirected_to_top,
              :redirected_to_top_reason,
-             :disable_jump_reply
+             :disable_jump_reply,
+             :custom_fields
 
   def include_site_flagged_posts_count?
     object.staff?
@@ -32,6 +34,10 @@ class CurrentUserSerializer < BasicUserSerializer
 
   def reply_count
     object.user_stat.topic_reply_count
+  end
+
+  def bookmarks_count
+    UserAction.bookmarks_stats(object.id)
   end
 
   def site_flagged_posts_count
@@ -68,6 +74,23 @@ class CurrentUserSerializer < BasicUserSerializer
 
   def include_redirected_to_top_reason?
     object.redirected_to_top_reason.present?
+  end
+
+  def custom_fields
+    fields = nil
+    if SiteSetting.public_user_custom_fields.present?
+      fields = SiteSetting.public_user_custom_fields.split('|')
+    end
+    DiscoursePluginRegistry.serialized_current_user_fields.each do |f|
+      fields ||= []
+      fields << f
+    end
+
+    if fields.present?
+      User.custom_fields_for_ids([object.id], fields)[object.id]
+    else
+      {}
+    end
   end
 
 end

@@ -4,11 +4,11 @@
   {{#each navItem in navItems}}
     {{navigation-item content=navItem filterMode=filterMode}}
   {{/each}}
-  {{customHTML "extraNavItem"}}
+  {{custom-html "extraNavItem"}}
 </ul>
 
 {{#if canChangeCategoryNotificationLevel}}
-  {{view Discourse.CategoryNotificationsButton categoryBinding="model" category=category}}
+  {{view Discourse.CategoryNotificationsButton category=category}}
 {{/if}}
 
 {{#if canCreateTopic}}

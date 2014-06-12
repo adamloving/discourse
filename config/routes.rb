@@ -62,6 +62,7 @@ Discourse::Application.routes.draw do
       put "grant_moderation", constraints: AdminConstraint.new
       put "approve"
       post "refresh_browsers", constraints: AdminConstraint.new
+      post "log_out", constraints: AdminConstraint.new
       put "activate"
       put "deactivate"
       put "block"
@@ -132,8 +133,8 @@ Discourse::Application.routes.draw do
         get "cancel" => "backups#cancel"
         get "rollback" => "backups#rollback"
         put "readonly" => "backups#readonly"
-        get "upload" => "backups#check_chunk"
-        post "upload" => "backups#upload_chunk"
+        get "upload" => "backups#check_backup_chunk"
+        post "upload" => "backups#upload_backup_chunk"
       end
     end
 
@@ -190,7 +191,7 @@ Discourse::Application.routes.draw do
   get "user_preferences" => "users#user_preferences_redirect"
   get "users/:username/private-messages" => "user_actions#private_messages", constraints: {username: USERNAME_ROUTE_FORMAT}
   get "users/:username/private-messages/:filter" => "user_actions#private_messages", constraints: {username: USERNAME_ROUTE_FORMAT}
-  get "users/:username" => "users#show", as: 'userpage', constraints: {username: USERNAME_ROUTE_FORMAT}
+  get "users/:username" => "users#show", as: 'user', constraints: {username: USERNAME_ROUTE_FORMAT}
   put "users/:username" => "users#update", constraints: {username: USERNAME_ROUTE_FORMAT}
   get "users/:username/preferences" => "users#preferences", constraints: {username: USERNAME_ROUTE_FORMAT}, as: :email_preferences
   get "users/:username/preferences/email" => "users#preferences", constraints: {username: USERNAME_ROUTE_FORMAT}
@@ -223,7 +224,6 @@ Discourse::Application.routes.draw do
   post "uploads" => "uploads#create"
 
   get "posts/by_number/:topic_id/:post_number" => "posts#by_number"
-  put "posts/by_number/:topic_id/:post_number/bookmarks/remove" => "posts#remove_bookmark_by_number"
   get "posts/:id/reply-history" => "posts#reply_history"
 
   resources :groups do
@@ -362,7 +362,12 @@ Discourse::Application.routes.draw do
   get "/posts/:id/expand-embed" => "posts#expand_embed"
   get "raw/:topic_id(/:post_number)" => "posts#markdown"
 
-  resources :invites
+  resources :invites do
+    collection do
+      get "upload" => "invites#check_csv_chunk"
+      post "upload" => "invites#upload_csv_chunk"
+    end
+  end
   delete "invites" => "invites#destroy"
 
   get "onebox" => "onebox#show"
