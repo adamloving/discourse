@@ -559,9 +559,10 @@ Discourse.User.reopenClass(Discourse.Singleton, {
     query = query || 'active';
     
     // TODO: Don't use /admin endpoint
-    return Discourse.ajax("/admin/users/list/" + query + ".json", {
+    return Discourse.ajax("/users.json", {
       data: { filter: filter }
     }).then(function(users) {
+      console.log('findAll', users);
       return users.map(function(u) {
         return Discourse.User.create(u);
       });

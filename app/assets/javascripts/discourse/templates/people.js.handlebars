@@ -2,7 +2,14 @@
   <h2>wassup</h2>
   
   {{#each user in users}}
-    <p>{{user.username}}</p>
+    {{#link-to 'user' user}}
+      {{avatar user imageSize="large"}}
+    {{/link-to}}
+    <p>
+      {{#link-to 'user' user}}
+        {{user.username}}
+      {{/link-to}}
+    </p>
   {{/each}}
 
 </div>

@@ -23,6 +23,12 @@ class UsersController < ApplicationController
                                                             :password_reset]
 
   def index
+    respond_to do |format|
+      format.json do 
+       query = ::AdminUserIndexQuery.new(query: 'active')
+       render_serialized(query.find_users, BasicUserSerializer) 
+      end
+    end
   end
 
   def show
