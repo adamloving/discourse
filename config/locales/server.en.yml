@@ -848,6 +848,7 @@ en:
     reply_by_email_address: "Template for reply by email incoming email address, for example: %{reply_key}@reply.example.com or replies+%{reply_key}@example.com"
 
     pop3s_polling_enabled: "Poll via POP3S for email replies"
+    pop3s_polling_insecure: "Poll using plain text POP3 without SSL"
     pop3s_polling_port: "The port to poll a POP3S account on"
     pop3s_polling_host: "The host to poll for email via POP3S"
     pop3s_polling_username: "The username for the POP3S account to poll for email"
@@ -903,6 +904,7 @@ en:
     feed_polling_enabled: "Whether to import a RSS/ATOM feed as posts"
     feed_polling_url: "URL of RSS/ATOM feed to import"
     embed_by_username: "Discourse username of the user who creates the topics"
+    embed_username_key_from_feed: "Key to pull discourse username from feed"
     embed_truncate: "Truncate the imported posts"
     embed_category: "Category of created topics"
     embed_post_limit: "Maximum number of posts to embed"
@@ -916,6 +918,10 @@ en:
     errors:
       invalid_email: "Invalid email address."
       invalid_username: "There's no user with that username."
+      invalid_integer_min_max: "Value must be between %{min} and %{max}."
+      invalid_integer_min: "Value must be %{min} or greater."
+      invalid_integer_max: "Value cannot be higher than %{max}."
+      invalid_integer: "Value must be an integer."
 
   notification_types:
     mentioned: "%{display_username} mentioned you in %{link}"
@@ -1014,30 +1020,38 @@ en:
       blocked: "is blocked."
 
   invite_mailer:
-    subject_template: "[%{site_name}] %{invitee_name} invited you to join a discussion on %{site_name}"
+    subject_template: "[%{site_name}] %{invitee_name} invited you to join a discussion"
     text_body_template: |
-      %{invitee_name} invited you to the topic "%{topic_title}" at %{site_name}.
+      %{invitee_name} invited you to a discussion
 
-      If you're interested, click the link below to visit the discussion:
+      > %{topic_title}
 
-      [Visit %{site_name}][1]
+      at
 
-      You were invited by a trusted user, so you'll be able to post a reply immediately, without needing to log in.
+      > **%{site_title}**
+      >
+      > %{site_description}
 
-      [1]: %{invite_link}
+      If you're interested, click the link below:
+
+      %{invite_link}
+
+      This is an invitation from a trusted user, so you can reply to the discussion immediately.
 
   invite_forum_mailer:
-    subject_template: "[%{site_name}] %{invitee_name} invited you to join %{site_name}"
+    subject_template: "[%{site_name}] %{invitee_name} invited you to join"
     text_body_template: |
-      %{invitee_name} invited you to %{site_name}.
+      %{invitee_name} invited you to join
 
-      If you're interested, click the link below to join:
+      > **%{site_title}**
+      >
+      > %{site_description}
 
-      [Visit %{site_name}][1]
+      If you're interested, click the link below:
 
-      You were invited by a trusted user, so you'll be able to join immediately, without needing to log in.
+      %{invite_link}
 
-      [1]: %{invite_link}
+      This invitation is from a trusted user, so you won't need to log in.
 
   test_mailer:
     subject_template: "[%{site_name}] Email Deliverability Test"

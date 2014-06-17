@@ -44,6 +44,7 @@ Discourse.KeyboardShortcuts = Ember.Object.createWithMixins({
 
   FUNCTION_BINDINGS: {
     'home': 'goToFirstPost',
+    '#': 'toggleProgress',
     'end': 'goToLastPost',
     'j': 'selectDown',
     'k': 'selectUp',
@@ -84,7 +85,7 @@ Discourse.KeyboardShortcuts = Ember.Object.createWithMixins({
 
   _jumpTo: function(direction) {
     if ($('.container.posts').length) {
-      this.container.lookup('controller:topic').send(direction);
+      this.container.lookup('controller:topic-progress').send(direction);
     }
   },
 
@@ -130,6 +131,10 @@ Discourse.KeyboardShortcuts = Ember.Object.createWithMixins({
     } else {
       return true;
     }
+  },
+
+  toggleProgress: function() {
+    Discourse.__container__.lookup('controller:topic-progress').send('toggleExpansion');
   },
 
   showSearch: function() {

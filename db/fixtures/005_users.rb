@@ -13,8 +13,6 @@ User.seed do |u|
   u.username_lower = "system"
   u.email = "no_email"
   u.password = SecureRandom.hex
-  # TODO localize this, its going to require a series of hacks
-  u.bio_raw = "Not a real person. A global user for system notifications and other system tasks."
   u.active = true
   u.admin = true
   u.moderator = true
@@ -23,3 +21,5 @@ User.seed do |u|
   u.email_private_messages = false
   u.trust_level = TrustLevel.levels[:elder]
 end
+
+Group.user_trust_level_change!(-1 ,TrustLevel.levels[:elder])
