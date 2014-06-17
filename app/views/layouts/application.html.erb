@@ -90,6 +90,10 @@
 
     <%= render_google_analytics_code %>
 
+    <% if current_user %>
+      <%= render :partial => 'common/fb_conversion' %>
+    <% end %>
+
     <!-- Discourse Version: <%= Discourse::VERSION::STRING %> -->
     <!-- Git Version: <%= Discourse.git_version %> -->
   </body>
