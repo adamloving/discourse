@@ -166,7 +166,14 @@ Create a .env file from the sample.
 
 ##### Start the application using Foreman
 
-    foreman run rails server
+    foreman start
+
+Assuming your Procfile contains...
+
+```
+web: bundle exec rails server -p $PORT
+worker: bundle exec sidekiq -e $RAILS_ENV
+```
 
 ##### Use Rails console, with pry
 
@@ -180,6 +187,10 @@ Create a .env file from the sample.
 
     foreman run rake autospec
 
+### Mailcatcher
+
+    $ mailcatcher
+    $ open http://localhost:1080/
 
 # Heroku add-on examples
 
